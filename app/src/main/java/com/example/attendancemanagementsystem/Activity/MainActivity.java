@@ -1,7 +1,9 @@
-package com.example.attendancemanagementsystem;
+package com.example.attendancemanagementsystem.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.attendancemanagementsystem.R;
 
 public class MainActivity extends AppCompatActivity {
 
