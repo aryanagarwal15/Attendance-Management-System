@@ -7,111 +7,72 @@
     android:orientation="vertical"
     tools:context=".Activity.MainActivity">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/media_card_view"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        >
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
-        <TextView
-            android:id="@+id/class_name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="32dp"
-            android:layout_toLeftOf="@id/scan"
-            android:text="Software Development for Portable devices"
-            android:textSize="18sp" />
-
-
-        <ImageButton
-            android:id="@+id/show_class"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_margin="8dp"
-            android:background="#ffffffff"
-            android:src="@drawable/ic_slideshow_black_24dp" />
+            android:padding="16dp">
 
-        <ImageButton
-            android:id="@+id/scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/show_class"
-            android:background="#ffffffff"
-
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_settings_overscan_black_24dp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        >
-
-        <TextView
-            android:id="@+id/class_name1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="32dp"
-            android:layout_toLeftOf="@id/scan1"
-            android:text="Software Development for Portable devices"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/class_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="32dp"
+                android:layout_toLeftOf="@id/scan"
+                android:text="Software Development for Portable devices"
+                android:textSize="18sp" />
 
 
-        <ImageButton
-            android:id="@+id/show_class1"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="8dp"
-            android:background="#ffffffff"
-            android:src="@drawable/ic_slideshow_black_24dp" />
+            <ImageButton
+                android:id="@+id/show_class"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/ic_slideshow_black_24dp" />
 
-        <ImageButton
-            android:id="@+id/scan1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/show_class1"
-            android:background="#ffffffff"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_settings_overscan_black_24dp" />
+            <ImageButton
+                android:id="@+id/scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@id/show_class"
+                android:background="@null"
+                android:src="@drawable/ic_settings_overscan_black_24dp" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:id="@+id/add_class_but"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:background="#4e4e4e"
-        >
+        android:background="#4e4e4e">
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_circle_black_24dp"
-            android:background="#ffffffff"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            />
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ic_add_circle_black_24dp" />
 
     </RelativeLayout>
 </LinearLayout>

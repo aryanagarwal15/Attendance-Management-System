@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".Activity.EditClassActivity" />
         <activity android:name=".Activity.ScanActivity" />
-        <activity android:name=".Activity.ShowClassActivity"></activity>
+        <activity android:name=".Activity.ShowClassActivity" />
+        <activity android:name=".Activity.PeriodAnalysisActivity" />
+        <activity android:name=".IndividualStudentActivity"></activity>
     </application>
 
 </manifest>

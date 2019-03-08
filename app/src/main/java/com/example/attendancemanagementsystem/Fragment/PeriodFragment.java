@@ -1,4 +1,17 @@
 package com.example.attendancemanagementsystem.Fragment;
 
-public class PeriodFragment {
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.attendancemanagementsystem.R;
+
+public class PeriodFragment extends Fragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_period, container, false);
+    }
 }
