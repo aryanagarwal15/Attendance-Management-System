@@ -8,18 +8,17 @@ import android.widget.Button;
 
 import com.example.attendancemanagementsystem.R;
 
-public class ScanActivity extends AppCompatActivity {
+public class ChangeStudentAttendance extends AppCompatActivity {
 
-    private Button finishAttendance;
+    private Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+        setContentView(R.layout.activity_change_student_attendance);
 
-        finishAttendance = findViewById(R.id.finish_attendance);
-
-        finishAttendance.setOnClickListener(new View.OnClickListener() {
+        save = findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

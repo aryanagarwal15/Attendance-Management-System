@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ChangeStudentAttendance">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/text_mark_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark Student As:"
+            android:textSize="22sp" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/selected_present"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_mark_student"
+            android:checked="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_mark_student"
+            android:layout_toRightOf="@id/selected_present"
+            android:text="Present"
+            android:textSize="22sp" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/selected_absent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selected_present" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selected_present"
+            android:layout_toRightOf="@id/selected_absent"
+            android:text="Absent"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:text="Save Changes" />
+
+</RelativeLayout>

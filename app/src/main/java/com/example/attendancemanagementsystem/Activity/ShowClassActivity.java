@@ -1,9 +1,12 @@
 package com.example.attendancemanagementsystem.Activity;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.attendancemanagementsystem.Adapter.ClassTabAdapter;
 import com.example.attendancemanagementsystem.Fragment.AnalyticsFragment;
@@ -15,6 +18,7 @@ public class ShowClassActivity extends AppCompatActivity {
     public ClassTabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FloatingActionButton takeAttendance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,7 @@ public class ShowClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_class);
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tab_layout);
-
+        takeAttendance = findViewById(R.id.take_attendance);
         getSupportActionBar().setTitle("SDPD");
 
         adapter = new ClassTabAdapter(getSupportFragmentManager());
@@ -31,5 +35,15 @@ public class ShowClassActivity extends AppCompatActivity {
         adapter.addFragment(new AnalyticsFragment(), "Analytics");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        takeAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ShowClassActivity.this, ScanActivity.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 }

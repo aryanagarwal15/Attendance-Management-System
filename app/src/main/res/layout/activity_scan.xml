@@ -16,8 +16,7 @@
             android:id="@+id/student_id"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:hint="Enter Student ID"
-            />
+            android:hint="Enter Student ID" />
 
         <Button
             android:id="@+id/submit_id"
@@ -27,5 +26,14 @@
             android:text="Submit" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/finish_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:text="Finish Attendance" />
 
 </RelativeLayout>

@@ -8,24 +8,23 @@ import android.view.View;
 
 import com.example.attendancemanagementsystem.R;
 
-public class PeriodAnalysisActivity extends AppCompatActivity {
+public class IndividualStudentActivity extends AppCompatActivity {
 
-    private CardView student;
+    private CardView period;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_period_analysis);
+        setContentView(R.layout.activity_individual_student);
 
-        student = findViewById(R.id.student);
+        period = findViewById(R.id.period);
 
-        getSupportActionBar().setTitle("15th Oct 2019 || 3PM-4PM");
+        getSupportActionBar().setTitle("Aryan Agarwal");
 
-
-        student.setOnClickListener(new View.OnClickListener() {
+        period.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PeriodAnalysisActivity.this, ChangeStudentAttendance.class);
+                Intent i = new Intent(IndividualStudentActivity.this, ChangeStudentAttendance.class);
                 startActivity(i);
             }
         });

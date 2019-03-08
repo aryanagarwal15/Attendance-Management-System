@@ -8,20 +8,22 @@ import android.widget.Button;
 
 import com.example.attendancemanagementsystem.R;
 
-public class ScanActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private Button finishAttendance;
+    private Button login_but;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+        setContentView(R.layout.activity_login);
 
-        finishAttendance = findViewById(R.id.finish_attendance);
+        login_but = findViewById(R.id.btn_login);
 
-        finishAttendance.setOnClickListener(new View.OnClickListener() {
+        login_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
                 finish();
             }
         });
