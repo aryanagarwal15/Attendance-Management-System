@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.attendancemanagementsystem">
 
+    <uses-permission android:name="android.permission.NFC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ChangeStudentAttendance"></activity>
+        <activity android:name=".Activity.ChangeStudentAttendance" />
+        <activity android:name=".Activity.AddStudentActivity"></activity>
     </application>
 
 </manifest>
