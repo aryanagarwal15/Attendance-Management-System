@@ -9,11 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.attendancemanagementsystem.Adapter.ClassTabAdapter;
-import com.example.attendancemanagementsystem.Fragment.AnalyticsFragment;
 import com.example.attendancemanagementsystem.Fragment.PeriodFragment;
 import com.example.attendancemanagementsystem.Fragment.StudentFragment;
 import com.example.attendancemanagementsystem.R;
-import com.example.attendancemanagementsystem.Utils.AppContants;
+import com.example.attendancemanagementsystem.Utils.AppConstants;
 
 public class ShowClassActivity extends AppCompatActivity {
     public ClassTabAdapter adapter;
@@ -34,11 +33,13 @@ public class ShowClassActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             className = extras.getString("className");
-            AppContants.classID = extras.getString("classID");
+            AppConstants.ClassName = className;
+            AppConstants.classID = extras.getString("classID");
             classID = extras.getString("classID");
         } else {
             className = "null";
-            AppContants.classID = "null";
+            AppConstants.classID = "null";
+            AppConstants.ClassName = className;
             classID = "null";
         }
         getSupportActionBar().setTitle(className);
@@ -46,7 +47,6 @@ public class ShowClassActivity extends AppCompatActivity {
         adapter = new ClassTabAdapter(getSupportFragmentManager());
         adapter.addFragment(new PeriodFragment(), "Period");
         adapter.addFragment(new StudentFragment(), "Students");
-        adapter.addFragment(new AnalyticsFragment(), "Analytics");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

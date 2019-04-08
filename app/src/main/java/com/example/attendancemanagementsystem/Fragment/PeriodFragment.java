@@ -1,6 +1,7 @@
 package com.example.attendancemanagementsystem.Fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 import com.example.attendancemanagementsystem.Adapter.PeriodAdapter;
 import com.example.attendancemanagementsystem.Model.PeriodItem;
 import com.example.attendancemanagementsystem.R;
-import com.example.attendancemanagementsystem.Utils.AppContants;
+import com.example.attendancemanagementsystem.Utils.AppConstants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,10 +27,12 @@ import java.util.List;
 
 public class PeriodFragment extends Fragment {
 
-    private CardView mainRelative;
     private RecyclerView recyclerView;
     private List<PeriodItem> periodItemList = new ArrayList<>();
     private PeriodAdapter adapter;
+    private FirebaseDatabase mFirebaseInstance;
+    private DatabaseReference mDatabase;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,21 +42,35 @@ public class PeriodFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabase = mFirebaseInstance.getReference();
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mDatabase = mFirebaseInstance.getReference();
 
-        mDatabase.child("classes").child(AppContants.classID).child("period").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("classes").child(AppConstants.classID).child("period").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 periodItemList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    PeriodItem periodItem = dataSnapshot1.getValue(PeriodItem.class);
-                    periodItem.setDate(dataSnapshot1.getKey());
+                    final PeriodItem periodItem = dataSnapshot1.getValue(PeriodItem.class);
+                    periodItem.setDate(dataSnapshot1.getKey().substring(0, 8));
+                    periodItem.setTime(dataSnapshot1.getKey().substring(9, 11) + ":00");
                     periodItemList.add(periodItem);
-                    Log.d("dev123", "here");
+                    adapter = new PeriodAdapter(getContext(), periodItemList);
+                    recyclerView.setAdapter(adapter);
+                    mDatabase.child("classes").child(AppConstants.classID).child("period").child(dataSnapshot1.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            periodItem.setAttendees(String.valueOf(dataSnapshot.getChildrenCount()));
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("PeriodFragment", "Failed to get Firebase data");
+                        }
+                    });
+
                 }
-                adapter = new PeriodAdapter(getContext(), periodItemList);
-                recyclerView.setAdapter(adapter);
+
             }
 
             @Override

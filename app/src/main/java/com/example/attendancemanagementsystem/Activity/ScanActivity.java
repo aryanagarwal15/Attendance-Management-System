@@ -18,12 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.attendancemanagementsystem.Model.StudentItem;
+
 import android.widget.Toast;
 
 import com.example.attendancemanagementsystem.NFC.NdefMessageParser;
 import com.example.attendancemanagementsystem.NFC.ParsedNdefRecord;
 import com.example.attendancemanagementsystem.R;
-import com.example.attendancemanagementsystem.Utils.AppContants;
+import com.example.attendancemanagementsystem.Utils.AppConstants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,15 +41,19 @@ public class ScanActivity extends AppCompatActivity {
 
     private Button finishAttendance, submitAttendance;
     private EditText studentID;
-
+    private FirebaseDatabase mFirebaseInstance;
+    private DatabaseReference mDatabase;
+    boolean flag1 = true;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
+    private String formattedDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if(nfcAdapter==null){
+        if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC Available", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -60,50 +65,18 @@ public class ScanActivity extends AppCompatActivity {
 
         finishAttendance = findViewById(R.id.finish_attendance);
         submitAttendance = findViewById(R.id.submit_id);
-        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
-        final DatabaseReference mDatabase = mFirebaseInstance.getReference();
-
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mDatabase = mFirebaseInstance.getReference();
         Date c = Calendar.getInstance().getTime();
-
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yy-HH");
-        final String formattedDate = df.format(c);
+        formattedDate = df.format(c);
         submitAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String studentIDS = studentID.getText().toString();
-
-                mDatabase.child("students").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        boolean flag = false, loopFinished = false;
-                        int i = 0;
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            StudentItem studentItem = dataSnapshot1.getValue(StudentItem.class);
-                            i++;
-                            if (studentItem.getStudentId().equalsIgnoreCase(studentIDS)) {
-                                mDatabase.child("classes").child(AppContants.classID).child("period").child(formattedDate).push().setValue(studentIDS);
-                                mDatabase.child("classes").child(AppContants.classID).child("students").child(studentIDS).push().setValue(formattedDate);
-                                flag = true;
-                            }
-                            if (dataSnapshot.getChildrenCount() == i)
-                                loopFinished = true;
-                        }
-                        if (!flag && loopFinished) {
-                            Intent intent = new Intent(ScanActivity.this, AddStudentActivity.class);
-                            intent.putExtra("studentID", studentIDS);
-                            startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e("ScanActivity", "Failed to get firebase data");
-                    }
-                });
-
+                sendData(studentIDS);
             }
         });
-
 
         finishAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,38 +86,114 @@ public class ScanActivity extends AppCompatActivity {
         });
     }
 
+    private void sendData(final String str) {
+        mDatabase.child("students").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean flag = false, loopFinished = false;
+                int i = 0;
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    StudentItem studentItem = dataSnapshot1.getValue(StudentItem.class);
+                    i++;
+                    if (studentItem.getStudentId().equalsIgnoreCase(str)) {
+                        mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).push().setValue(str);
+                        mDatabase.child("classes").child(AppConstants.classID).child("students").child(str).push().setValue(formattedDate);
+                        flag = true;
+                    }
+                    if (dataSnapshot.getChildrenCount() == i)
+                        loopFinished = true;
+                }
+                if (!flag && loopFinished) {
+                    Intent intent = new Intent(ScanActivity.this, AddStudentActivity.class);
+                    intent.putExtra("studentEncryption", str);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ScanActivity", "Failed to get firebase data");
+            }
+        });
+    }
+
+    private void processID(final String str) {
+        flag1 = true;
+
+        mDatabase.child("students").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (flag1) {
+                    flag1 = false;
+                    if (dataSnapshot.child(str).exists()) {
+                        final StudentItem studentItem = dataSnapshot.child(str).getValue(StudentItem.class);
+                        mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (!dataSnapshot.child(str).exists()) {
+                                    mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).child(str).setValue(studentItem.getStudentId());
+                                    mDatabase.child("classes").child(AppConstants.classID).child("students").child(studentItem.getStudentId()).push().setValue(formattedDate);
+                                } else {
+                                    Toast.makeText(ScanActivity.this, "Attendance Already Taken", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e("ScanActivity", "Failed to get firebase data");
+                            }
+                        });
+//                        mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).child(str).setValue(studentItem.getStudentId());
+//                        mDatabase.child("classes").child(AppConstants.classID).child("students").child(studentItem.getStudentId()).push().setValue(formattedDate);
+                    } else {
+                        Intent intent = new Intent(ScanActivity.this, AddStudentActivity.class);
+                        intent.putExtra("studentEncryption", str);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ScanActivity", "Failed to get firebase data");
+            }
+        });
+    }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
-        if(nfcAdapter!=null){
-            if(!nfcAdapter.isEnabled()) showWirelessSettings();
+        if (nfcAdapter != null) {
+            if (!nfcAdapter.isEnabled()) showWirelessSettings();
             nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
         }
     }
 
-    private void showWirelessSettings(){
+    private void showWirelessSettings() {
         Toast.makeText(this, "You Need to Enable NFC", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         nfcAdapter.disableForegroundDispatch(this);
         super.onPause();
     }
 
     @Override
-    protected void onNewIntent(Intent intent){
+    protected void onNewIntent(Intent intent) {
         setIntent(intent);
         resolveIntent(intent);
     }
 
-    private void resolveIntent(Intent intent){
+    private void resolveIntent(Intent intent) {
         String action = intent.getAction();
-        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) ||
-            NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) ||
-            NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) ||
+                NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) ||
+                NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             NdefMessage[] msgs;
 
@@ -165,19 +214,18 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
-    private void displayMsgs(NdefMessage[] msgs){
-        if(msgs==null || msgs.length==0) return;
+
+    private void displayMsgs(NdefMessage[] msgs) {
+        if (msgs == null || msgs.length == 0) return;
         StringBuilder builder = new StringBuilder();
         List<ParsedNdefRecord> records = NdefMessageParser.parse(msgs[0]);
         int size = records.size();
+        ParsedNdefRecord record = records.get(0);
+        String str = record.str();
+        str = str.substring(1, str.length() - 1);
+        str = str.replace("/", "");
 
-        for (int i = 0; i < size; i++) {
-            ParsedNdefRecord record = records.get(i);
-            String str = record.str();
-            builder.append(str).append("\n");
-        }
-
-        Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show();
+        processID(str);
     }
 
     private String dumpTagData(Tag tag) {

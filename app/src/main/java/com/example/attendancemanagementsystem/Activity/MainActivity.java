@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private List<ClassItem> classList = new ArrayList<>();
     private FirebaseAuth mAuth;
     private String TAG = "MainActivity";
-
+    boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         //INIT VIEWS HERE
         RelativeLayout addClass = findViewById(R.id.add_class_but);
         recyclerView = findViewById(R.id.class_recycler_view);
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (flag) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            flag = false;
+        }
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase = mFirebaseInstance.getReference();
 

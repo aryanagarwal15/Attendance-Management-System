@@ -41,8 +41,6 @@ public class EditClassActivity extends AppCompatActivity {
                 classItem.setClassName(className.getText().toString());
                 classItem.setStrength(strength.getText().toString());
                 mDatabase.child("class").child(mAuth.getUid()).push().setValue(classItem);
-                Intent i = new Intent(EditClassActivity.this, MainActivity.class);
-                startActivity(i);
                 finish();
             }
         });

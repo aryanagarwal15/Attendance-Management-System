@@ -1,10 +1,13 @@
 package com.example.attendancemanagementsystem.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.attendancemanagementsystem.Model.StudentItem;
 import com.example.attendancemanagementsystem.R;
@@ -27,11 +30,10 @@ public class AddStudentActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            student = extras.getString("studentID");
+            student = extras.getString("studentEncryption");
         } else {
             student = "";
         }
-        studentId.setText(student);
 
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         final DatabaseReference mDatabase = mFirebaseInstance.getReference();
@@ -42,8 +44,9 @@ public class AddStudentActivity extends AppCompatActivity {
                 StudentItem studentItem = new StudentItem();
                 studentItem.setStudentName(studentName.getText().toString());
                 studentItem.setStudentId(studentId.getText().toString());
-                mDatabase.child("students").push().setValue(studentItem);
-                finish();
+                mDatabase.child("students").child(student).setValue(studentItem);
+                Toast.makeText(AddStudentActivity.this, "Student added to the class", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(AddStudentActivity.this, ScanActivity.class));
             }
         });
     }
