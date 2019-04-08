@@ -47,6 +47,7 @@ public class AddStudentActivity extends AppCompatActivity {
                 mDatabase.child("students").child(student).setValue(studentItem);
                 Toast.makeText(AddStudentActivity.this, "Student added to the class", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(AddStudentActivity.this, ScanActivity.class));
+                finish();
             }
         });
     }
