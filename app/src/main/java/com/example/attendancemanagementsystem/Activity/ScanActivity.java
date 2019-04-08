@@ -92,12 +92,26 @@ public class ScanActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean flag = false, loopFinished = false;
                 int i = 0;
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    StudentItem studentItem = dataSnapshot1.getValue(StudentItem.class);
+                for (final DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    final StudentItem studentItem = dataSnapshot1.getValue(StudentItem.class);
                     i++;
                     if (studentItem.getStudentId().equalsIgnoreCase(str)) {
-                        mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).push().setValue(str);
-                        mDatabase.child("classes").child(AppConstants.classID).child("students").child(str).push().setValue(formattedDate);
+                        mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (!dataSnapshot.child(dataSnapshot1.getKey()).exists()) {
+                                    mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).child(dataSnapshot1.getKey()).setValue(studentItem.getStudentId());
+                                    mDatabase.child("classes").child(AppConstants.classID).child("students").child(studentItem.getStudentId()).push().setValue(formattedDate);
+                                } else {
+                                    Toast.makeText(ScanActivity.this, "Attendance Already Taken", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e("ScanActivity", "Failed to get firebase data");
+                            }
+                        });
                         flag = true;
                     }
                     if (dataSnapshot.getChildrenCount() == i)
@@ -136,7 +150,6 @@ public class ScanActivity extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(ScanActivity.this, "Attendance Already Taken", Toast.LENGTH_LONG).show();
                                 }
-
                             }
 
                             @Override
@@ -144,8 +157,6 @@ public class ScanActivity extends AppCompatActivity {
                                 Log.e("ScanActivity", "Failed to get firebase data");
                             }
                         });
-//                        mDatabase.child("classes").child(AppConstants.classID).child("period").child(formattedDate).child(str).setValue(studentItem.getStudentId());
-//                        mDatabase.child("classes").child(AppConstants.classID).child("students").child(studentItem.getStudentId()).push().setValue(formattedDate);
                     } else {
                         Intent intent = new Intent(ScanActivity.this, AddStudentActivity.class);
                         intent.putExtra("studentEncryption", str);
