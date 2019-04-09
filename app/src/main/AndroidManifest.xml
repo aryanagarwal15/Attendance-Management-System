@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.attendancemanagementsystem">
+    package="me.aryanagarwal.attendancemanagementsystem">
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc" />
@@ -11,21 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.EditClassActivity" />
-        <activity android:name=".Activity.ScanActivity" />
-        <activity android:name=".Activity.ShowClassActivity" />
-        <activity android:name=".Activity.PeriodAnalysisActivity" />
-        <activity android:name=".Activity.IndividualStudentActivity" />
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.MainActivity" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.EditClassActivity" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.ScanActivity" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.ShowClassActivity" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.PeriodAnalysisActivity" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.IndividualStudentActivity" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ChangeStudentAttendance" />
-        <activity android:name=".Activity.AddStudentActivity"></activity>
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.ChangeStudentAttendance" />
+        <activity android:name="me.aryanagarwal.attendancemanagementsystem.Activity.AddStudentActivity"></activity>
     </application>
 
 </manifest>

@@ -1,52 +1,45 @@
 {
   "project_info": {
-    "project_number": "524192461809",
-    "firebase_url": "https://attendance-management-sy-227f3.firebaseio.com",
-    "project_id": "attendance-management-sy-227f3",
-    "storage_bucket": "attendance-management-sy-227f3.appspot.com"
+    "project_number": "997415843655",
+    "firebase_url": "https://ams-release.firebaseio.com",
+    "project_id": "ams-release",
+    "storage_bucket": "ams-release.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:524192461809:android:e53c05e619187710",
+        "mobilesdk_app_id": "1:997415843655:android:649b07f31d23b552",
         "android_client_info": {
-          "package_name": "com.example.attendancemanagementsystem"
+          "package_name": "me.aryanagarwal.attendancemanagementsystem"
         }
       },
       "oauth_client": [
         {
-          "client_id": "524192461809-oda0ucuqjm50bdihk2e9ida3ai2df123.apps.googleusercontent.com",
+          "client_id": "997415843655-8vaubpcir7ecgvsrl3inis91e4r8dspo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.attendancemanagementsystem",
+            "package_name": "me.aryanagarwal.attendancemanagementsystem",
             "certificate_hash": "c0428b98d576c196c0948ce8671d5234479a1e5a"
           }
         },
         {
-          "client_id": "524192461809-taonn7r8p8ica6e8tcsdgi7ke5r8ctra.apps.googleusercontent.com",
+          "client_id": "997415843655-us0s9guufb3is46fpd9dcpuqgqi1rsdl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCsP0GRGlOwtGNPVKdMv-nYFG76J-ch_Sw"
+          "current_key": "AIzaSyDKlTBdwvWRU2StefTqNNerXaLxmI4m88w"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "524192461809-taonn7r8p8ica6e8tcsdgi7ke5r8ctra.apps.googleusercontent.com",
+              "client_id": "997415843655-us0s9guufb3is46fpd9dcpuqgqi1rsdl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

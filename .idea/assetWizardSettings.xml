@@ -23,7 +23,6 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="76" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -35,8 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="a6282e" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/noun_fingerprint sensor_2367133.svg" />
+                                      <entry key="backgroundColor" value="f11b3f" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/Untitled-1.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
